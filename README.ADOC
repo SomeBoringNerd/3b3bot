@@ -1,4 +1,28 @@
-= Discord commands
+= In-game commands
+
+|===
+|command | usage |description
+
+|hello
+| >hello
+| test command
+
+|quote
+| >quote <player>
+|print random message sent by a player
+
+|help
+| >help
+|Show a list of commands
+
+|tracked
+|>tracked <add-all/save-all>
+|start or stop recording data from players online
+
+|===
+
+
+= Discord commands (todo)
 
 
 |===
