@@ -46,35 +46,30 @@
 
 |===
 
+= TodoList
 
-= sqlite format
-***
-
-=== message :
 
 |===
-|Value |type
+|feature | priority |description
 
-|Player
-|Char(16)
+| Discord bot
+| mid
+| make a discord bot that can interact with the data
 
-|Message
-|Char(255)
+| Un-hardcode values
+| high
+| a lot of values, notably with the join/leave messages and ownership principle, are hardcoded.
 
-|Timestamp
-|Timestamp
+| Server tracker
+| high
+| track the data from the server (tps, ping, player, messages, etc...)
+
+| IRC Support
+| low
+| allow the bridge to exist with IRC
+
+| Telegram support
+| unlikely
+| allow the bridge to exist with Telegram
+
 |===
-
-=== death message :
-
-|===
-| Value |type
-
-| Victim
-| Char(16)
-
-| Killer
-| Char(16)
-
-| DeathReason
-| Char(128)
