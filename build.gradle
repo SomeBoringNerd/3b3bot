@@ -1,0 +1,125 @@
+plugins {
+    id 'maven-publish'
+    id 'fabric-loom' version '1.2-SNAPSHOT'
+    id "com.github.johnrengelman.shadow" version "7.1.2"
+}
+
+base {
+    archivesName = project.archives_base_name
+}
+
+version = project.mod_version
+group = project.maven_group
+
+repositories {
+    maven {
+        name = "meteor-maven"
+        url = "https://maven.meteordev.org/releases"
+    }
+    maven { url 'https://jitpack.io'}
+    maven { url "https://libraries.minecraft.net"}
+}
+
+ext {
+    lwjglVersion = '3.3.1'
+    imguiVersion = '1.86.11'
+}
+
+configurations {
+    implementation.extendsFrom(library)
+    shadow.extendsFrom(library)
+}
+
+dependencies {
+    minecraft "com.mojang:minecraft:${project.minecraft_version}"
+    mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
+    modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
+
+    library 'org.json:json:20230227'
+    library "meteordevelopment:orbit:0.2.3"
+    library 'org.reflections:reflections:0.10.2'
+
+    library 'org.xerial:sqlite-jdbc:3.45.0.0'
+
+    annotationProcessor 'org.projectlombok:lombok:1.18.28'
+    implementation 'org.projectlombok:lombok:1.18.28'
+
+}
+
+processResources {
+    inputs.property "version", getGitHash()
+    inputs.property "minecraft_version", project.minecraft_version
+    inputs.property "loader_version", project.loader_version
+    filteringCharset "UTF-8"
+
+    filesMatching("fabric.mod.json") {
+        expand "version": getGitHash(),
+                "minecraft_version": project.minecraft_version,
+                "loader_version": project.loader_version
+    }
+}
+
+String getGitHash() {
+    // git hash
+    def command = Runtime.getRuntime().exec("git rev-parse --short HEAD")
+    def result = command.waitFor()
+    if (result != 0) {
+        return "15rtges"
+    }
+
+    String gitCommitHash = command.inputStream.text.trim()
+
+    println("getGitHash() : " + gitCommitHash)
+
+    return gitCommitHash
+}
+
+shadowJar {
+    configurations = [ project.configurations.shadow ]
+
+    dependencies {
+        exclude {
+            it.moduleGroup == "org.slf4j"
+        }
+    }
+}
+
+remapJar {
+    dependsOn shadowJar
+    inputFile.set(shadowJar.archiveFile)
+}
+
+tasks.withType(JavaCompile).configureEach {
+    it.options.encoding = 'UTF-8'
+    it.options.release = 17
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+}
+
+jar {
+    from('LICENSE') {
+        rename { "${it}_${base.archivesName.get()}" }
+    }
+}
+
+
+tasks.register('Build and run', Exec) {
+
+    commandLine './scripts/run.sh'
+}
+
+// Configure the maven publication
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+        }
+    }
+
+    // See https://docs.gradle.org/current/userguide/publishing_maven.html for information on how to set up publishing.
+    repositories {
+    }
+}

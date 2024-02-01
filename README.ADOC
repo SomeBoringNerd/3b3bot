@@ -1,0 +1,56 @@
+= Discord commands
+
+
+|===
+|command | usage |description
+
+|online
+| /online
+| show online players
+
+|quote
+| /quote <player>
+|print random message sent by a player
+
+|top
+|/top <playtime/messages/kill/deaths>
+|show a top 10 of the recorded player stat specified
+
+|kd
+|/kd <player>
+|show the recorded kill/death ratio of a player
+
+|===
+
+
+= sqlite format
+***
+
+=== message :
+
+|===
+|Value |type
+
+|Player
+|Char(16)
+
+|Message
+|Char(255)
+
+|Timestamp
+|Timestamp
+|===
+
+=== death message :
+
+|===
+| Value |type
+
+| Victim
+| Char(16)
+
+| Killer
+| Char(16)
+
+| DeathReason
+| Char(128)
