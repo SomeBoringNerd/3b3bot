@@ -96,8 +96,6 @@ public class SessionManager {
                 ignored.set(ignored.get()+1);
             }
         });
-
-        ChatUtil.sendMessage("Added %s sessions to the tracker, ignored %s already tracked sessions", added.get(), ignored.get());
     }
 
     public void saveAll() {

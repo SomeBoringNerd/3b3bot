@@ -10,6 +10,8 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import xyz.someboringnerd.b3bot.ClientInit;
 import xyz.someboringnerd.b3bot.events.PlayerTickEvent;
+import xyz.someboringnerd.b3bot.managers.SessionManager;
+import xyz.someboringnerd.b3bot.util.ChatUtil;
 
 @Mixin(PlayerEntity.class)
 public abstract class PlayerMixin {
@@ -18,6 +20,9 @@ public abstract class PlayerMixin {
 
     @Inject(method = "tick", at = @At("HEAD"))
     private void tick(CallbackInfo ci) {
+        if(MinecraftClient.getInstance().player != null && MinecraftClient.getInstance().player.age >= 10) {
+            SessionManager.getInstance().addAll();
+        }
         if(this.getGameProfile().getName().equalsIgnoreCase(MinecraftClient.getInstance().player.getGameProfile().getName())) {
             ClientInit.EVENT_BUS.post(PlayerTickEvent.get());
         }

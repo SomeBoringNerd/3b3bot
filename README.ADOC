@@ -1,3 +1,59 @@
+= The project :
+
+3b3bot is a fabric mod that turn your account into a chat-based bot on anarchy servers.
+
+I use it to track stats on join.3b3france.fr
+
+== Deploy
+
+=== clone the repo :
+
+`git clone git@github.com:SomeBoringNerd/3b3bot.git`
+
+If needed, edit the code to adapt it to the server of your choice.
+
+=== build :
+
+build the mod, using Java 17 :
+
+`./gradlew build`
+
+=== install the mod :
+
+in the folder build/libs, you'll find several .jar files, move b3bot-1.0.0.jar to your .minecraft/Mods
+
+=== launch the bot :
+
+The prefered way of deploying the bot on a server is using https://github.com/3arthqu4ke/headlessmc[Headlessmc by 3arthqu4ke]
+
+Download the release of headlessmc, and launch it though java -jar
+
+if it's not already done, enter the two following commands on the app :
+
+`download 1.20.1`
+
+and
+
+`fabric 1.20.1`
+
+Once that's done, also download https://github.com/3arthqu4ke/hmc-specifics[hmc-specifics] and put it in your mods folder
+
+restart headless-mc, and enter the command `versions`
+
+you'll have something looking like this :
+
+image::http://pics.self-hosted.lol/i/img/3OFzRLt2.png[]
+
+to launch the correct instance of mc, enter the command :
+
+`launch (the id of the fabric-loader instance) -id -lwjgl`
+
+After the console stop spitting out logs, finally enter the command
+
+`connect (server ip, with port if needed)`
+
+and you are good to go ! check out the commands here :
+
 = In-game commands
 
 |===
